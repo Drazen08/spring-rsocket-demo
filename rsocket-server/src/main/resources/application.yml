@@ -1,0 +1,16 @@
+spring:
+  main:
+    lazy-initialization: false
+  rsocket:
+    server:
+      port: 7000
+      mapping-path: /rsocket
+      transport: tcp
+
+logging.level.io.rsocket=DEBUG
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://192.168.10.230:8761/eureka/
+  instance:
+    prefer-ip-address: true
