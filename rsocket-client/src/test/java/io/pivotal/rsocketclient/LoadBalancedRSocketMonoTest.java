@@ -16,122 +16,73 @@
 
 package io.pivotal.rsocketclient;
 
-import io.rsocket.Payload;
 import io.rsocket.RSocket;
-import io.rsocket.client.LoadBalancedRSocketMono;
-import io.rsocket.client.filter.RSocketSupplier;
-import org.junit.Assert;
-import org.junit.Test;
-import org.mockito.Mockito;
-import org.reactivestreams.Publisher;
+import io.rsocket.RSocketFactory;
+import io.rsocket.core.RSocketConnector;
+import io.rsocket.frame.decoder.PayloadDecoder;
+import io.rsocket.transport.netty.client.TcpClientTransport;
+import org.springframework.messaging.rsocket.MetadataExtractor;
+import org.springframework.messaging.rsocket.RSocketRequester;
+import org.springframework.util.MimeTypeUtils;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.concurrent.CompletableFuture;
-import java.util.function.Function;
+import java.net.InetSocketAddress;
 
 public class LoadBalancedRSocketMonoTest {
+    static final int[] PORTS = new int[]{7001};
 
-  @Test(timeout = 10_000L)
-  public void testNeverSelectFailingFactories() throws InterruptedException {
-    TestingRSocket        socket     = new TestingRSocket(Function.identity());
-    RSocketSupplier       failing    = failingClient();
-    RSocketSupplier       succeeding = succeedingFactory(socket);
-    List<RSocketSupplier> factories  = Arrays.asList(failing, succeeding);
+   static RSocket init(){
+        return RSocketFactory.connect()
+                .mimeType(MetadataExtractor.ROUTE_KEY.toString(), MimeTypeUtils.APPLICATION_JSON_VALUE)
+                .frameDecoder(PayloadDecoder.ZERO_COPY)
+                .transport(TcpClientTransport.create(new InetSocketAddress(7001)))
+                .start()
+                .block();
+        
+    }
+    public static void main(String[] args) {
+        RSocket rSocket = RSocketConnector.create()
+                // Enable Zero Copy
+                .dataMimeType(MimeTypeUtils.ALL_VALUE)
+                .payloadDecoder(PayloadDecoder.ZERO_COPY)
+                .connect(TcpClientTransport.create("localhost",7001)).block();
+        RSocketRequester wrap = RSocketRequester.wrap(rSocket, MimeTypeUtils.ALL, MimeTypeUtils.ALL, null);
+        Mono<String>     demo = wrap.route("demo").retrieveMono(String.class);
+        System.out.println(demo.block());
+//        Payload demo = rSocket.requestStream(DefaultPayload.create("demo")).retry().blockFirst();
+//        System.out.println(demo.getDataUtf8());
 
-    testBalancer(factories);
-  }
 
-  @Test(timeout = 10_000L)
-  public void testNeverSelectFailingSocket() throws InterruptedException {
-    TestingRSocket socket = new TestingRSocket(Function.identity());
-    TestingRSocket failingSocket =
-        new TestingRSocket(Function.identity()) {
-          @Override
-          public Mono<Payload> requestResponse(Payload payload) {
-            return Mono.error(new RuntimeException("You shouldn't be here"));
-          }
 
-          @Override
-          public double availability() {
-            return 0.0;
-          }
-        };
+//
+//        List rsocketSuppliers = Arrays.stream(PORTS)
+//                .mapToObj(port -> new RSocketSupplier(() ->
+//                        RSocketConnector.create()
+//                                // Enable Zero Copy
+//                                .payloadDecoder(PayloadDecoder.ZERO_COPY)
+//                                .connect(TcpClientTransport.create(port))
+////                        RSocketFactory.connect()
+////                                .transport(TcpClientTransport.create("localhost", port))
+////                                .start()
+//
+//                        )
+//
+//                )
+//                .collect(Collectors.toList());
+//
+//        LoadBalancedRSocketMono balancer = LoadBalancedRSocketMono.create((Publisher) s -> {
+//            s.onNext(rsocketSuppliers);
+//            s.onComplete();
+//        });
+//
+//        Flux.range(0, 2)
+//                .flatMap(i -> balancer)
+//                .doOnNext(rSocket -> {
+//                    Flux<Payload> demo = rSocket.requestStream(DefaultPayload.create("demo")).retry();
+//                    demo.doOnNext(d-> System.out.println(d.getDataUtf8())).blockLast();
+//                }).blockLast();
 
-    RSocketSupplier       failing    = succeedingFactory(failingSocket);
-    RSocketSupplier       succeeding = succeedingFactory(socket);
-    List<RSocketSupplier> clients    = Arrays.asList(failing, succeeding);
-
-    testBalancer(clients);
-  }
-
-  @Test(timeout = 10_000L)
-  public void testRefreshesSocketsOnSelectBeforeReturningFailedAfterNewFactoriesDelivered() {
-    TestingRSocket socket = new TestingRSocket(Function.identity());
-
-    CompletableFuture<RSocketSupplier> laterSupplier = new CompletableFuture<>();
-    Flux<List<RSocketSupplier>> factories =
-        Flux.create(
-            s -> {
-              s.next(Collections.emptyList());
-
-              laterSupplier.handle(
-                  (RSocketSupplier result, Throwable t) -> {
-                    s.next(Collections.singletonList(result));
-                    return null;
-                  });
-            });
-
-    LoadBalancedRSocketMono balancer = LoadBalancedRSocketMono.create(factories);
-
-    Assert.assertEquals(0.0, balancer.availability(), 0);
-
-    laterSupplier.complete(succeedingFactory(socket));
-//    balancer.rSocketMono.block();
-
-    Assert.assertEquals(1.0, balancer.availability(), 0);
-  }
-
-  private void testBalancer(List<RSocketSupplier> factories) throws InterruptedException {
-    Publisher<List<RSocketSupplier>> src =
-        s -> {
-          s.onNext(factories);
-          s.onComplete();
-        };
-
-    LoadBalancedRSocketMono balancer = LoadBalancedRSocketMono.create(src);
-
-    while (balancer.availability() == 0.0) {
-      Thread.sleep(1);
     }
 
-    Flux.range(0, 100).flatMap(i -> balancer).blockLast();
-  }
-
-  private static RSocketSupplier succeedingFactory(RSocket socket) {
-    RSocketSupplier mock = Mockito.mock(RSocketSupplier.class);
-
-    Mockito.when(mock.availability()).thenReturn(1.0);
-    Mockito.when(mock.get()).thenReturn(Mono.just(socket));
-    Mockito.when(mock.onClose()).thenReturn(Mono.never());
-
-    return mock;
-  }
-
-  private static RSocketSupplier failingClient() {
-    RSocketSupplier mock = Mockito.mock(RSocketSupplier.class);
-
-    Mockito.when(mock.availability()).thenReturn(0.0);
-    Mockito.when(mock.get())
-        .thenAnswer(
-            a -> {
-              Assert.fail();
-              return null;
-            });
-
-    return mock;
-  }
 }

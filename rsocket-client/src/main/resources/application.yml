@@ -1,0 +1,19 @@
+#spring.main.banner-mode=OFF
+server:
+  port: 8000
+
+spring:
+  application:
+   name: rsocket-client-demo
+
+logging:
+  level:
+   io.rsocket: DEBUG
+
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://192.168.10.230:8761/eureka/
+  instance:
+    prefer-ip-address: true

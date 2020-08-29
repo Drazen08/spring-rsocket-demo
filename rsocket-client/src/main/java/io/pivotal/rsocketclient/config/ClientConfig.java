@@ -3,9 +3,11 @@ package io.pivotal.rsocketclient.config;
 import io.rsocket.RSocket;
 import io.rsocket.RSocketFactory;
 import io.rsocket.frame.decoder.PayloadDecoder;
+import io.rsocket.metadata.WellKnownMimeType;
 import io.rsocket.transport.netty.client.TcpClientTransport;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.MediaType;
 import org.springframework.messaging.rsocket.MetadataExtractor;
 import org.springframework.messaging.rsocket.RSocketRequester;
 import org.springframework.messaging.rsocket.RSocketStrategies;
@@ -31,10 +33,21 @@ public class ClientConfig {
 //                .block();
 //    }
 
+//    @Bean
+//    RSocket rSocket() {
+//        return RSocketFactory
+//                .connect()
+//                .dataMimeType(MediaType.APPLICATION_CBOR_VALUE)
+//                .metadataMimeType(WellKnownMimeType.MESSAGE_RSOCKET_COMPOSITE_METADATA.getString())
+//                .transport(TcpClientTransport.create(7000))
+//                .start()
+//                .block();
+//    }
+
     @Bean
     RSocketRequester rSocketRequester(RSocketStrategies rSocketStrategies) {
 
-        InetSocketAddress address = new InetSocketAddress("localhost",7000);
+        InetSocketAddress address = new InetSocketAddress("localhost",7001);
         return RSocketRequester.builder()
                 .rsocketFactory(factory -> factory
                         .dataMimeType(MimeTypeUtils.ALL_VALUE)

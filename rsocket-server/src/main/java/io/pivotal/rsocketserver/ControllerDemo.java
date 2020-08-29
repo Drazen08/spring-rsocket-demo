@@ -23,10 +23,9 @@ public class ControllerDemo {
     @Autowired
     private IDemoService iDemoService;
 
-
     @MessageMapping("demo")
     public Mono<String> sayHi(){
-        return Mono.just(iDemoService.sayHi() + String.format("port :[%s]",environment.getProperty("local.server.port") ));
+        return Mono.just(iDemoService.sayHi() + String.format("port :[%s]",environment.getProperty("local.rsocket.server.port") ));
     }
 
 }
