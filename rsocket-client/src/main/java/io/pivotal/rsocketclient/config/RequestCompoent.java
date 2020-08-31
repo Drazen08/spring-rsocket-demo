@@ -7,7 +7,6 @@ import io.rsocket.transport.netty.client.TcpClientTransport;
 import lombok.Value;
 import lombok.extern.slf4j.Slf4j;
 import org.reactivestreams.Publisher;
-import org.reactivestreams.Subscription;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.cloud.client.discovery.ReactiveDiscoveryClient;
@@ -17,7 +16,6 @@ import org.springframework.messaging.rsocket.RSocketStrategies;
 import org.springframework.stereotype.Component;
 import org.springframework.util.MimeType;
 
-import java.time.Duration;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -55,15 +53,17 @@ public class RequestCompoent {
                 return loadBalancedRSocketMono(serviceId);
             }
             return v;
-        }).map(r ->
-                RSocketRequester.wrap(
-                        r,
-                        cbor,
-                        rsocket,
-                        rSocketStrategies)
-        ).retryBackoff(1, Duration.ofMillis(100)).block();
-
-
+        }).map(r -> {
+                    if (r.isDisposed()) {
+                        throw new RuntimeException("error");
+                    }
+                    return RSocketRequester.wrap(
+                            r,
+                            cbor,
+                            rsocket,
+                            rSocketStrategies);
+                }
+        ).block();
     }
 
 
