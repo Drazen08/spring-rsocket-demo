@@ -4,7 +4,7 @@ server:
 
 spring:
   application:
-   name: rsocket-client-demo
+   name: rsocket-client85-demo
 
 logging:
   level:

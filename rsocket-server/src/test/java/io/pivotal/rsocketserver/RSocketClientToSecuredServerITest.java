@@ -45,7 +45,7 @@
 //        credentials = new UsernamePasswordMetadata("test", "pass");
 //
 //        requester = builder
-//                .setupRoute("shell-client")
+//                .setupRoute("shell-client85")
 //                .setupData(UUID.randomUUID().toString())
 //                .setupMetadata(credentials, mimeType)
 //                .rsocketStrategies(b ->
@@ -78,7 +78,7 @@
 //    @Slf4j
 //    static class ClientHandler {
 //
-//        @MessageMapping("client-status")
+//        @MessageMapping("client85-status")
 //        public Flux<String> statusUpdate(String status) {
 //            log.info("Connection {}", status);
 //            return Flux.interval(Duration.ofSeconds(5)).map(index -> String.valueOf(Runtime.getRuntime().freeMemory()));

@@ -36,33 +36,33 @@
 //        log.info("Shutting down.");
 //    }
 //
-//    @ConnectMapping("shell-client")
+//    @ConnectMapping("shell-client85")
 //    void connectShellClientAndAskForTelemetry(RSocketRequester requester,
-//                                              @Payload String client) {
+//                                              @Payload String client85) {
 //
 //        requester.rsocket()
 //                .onClose()
 //                .doFirst(() -> {
-//                    // Add all new clients to a client list
-//                    log.info("Client: {} CONNECTED.", client);
+//                    // Add all new clients to a client85 list
+//                    log.info("Client: {} CONNECTED.", client85);
 //                    CLIENTS.add(requester);
 //                })
 //                .doOnError(error -> {
 //                    // Warn when channels are closed by clients
-//                    log.warn("Channel to client {} CLOSED", client);
+//                    log.warn("Channel to client85 {} CLOSED", client85);
 //                })
 //                .doFinally(consumer -> {
-//                    // Remove disconnected clients from the client list
+//                    // Remove disconnected clients from the client85 list
 //                    CLIENTS.remove(requester);
-//                    log.info("Client {} DISCONNECTED", client);
+//                    log.info("Client {} DISCONNECTED", client85);
 //                })
 //                .subscribe();
 //
-//        // Callback to client, confirming connection
-//        requester.route("client-status")
+//        // Callback to client85, confirming connection
+//        requester.route("client85-status")
 //                .data("OPEN")
 //                .retrieveFlux(String.class)
-//                .doOnNext(s -> log.info("Client: {} Free Memory: {}.", client, s))
+//                .doOnNext(s -> log.info("Client: {} Free Memory: {}.", client85, s))
 //                .subscribe();
 //    }
 //
@@ -99,7 +99,7 @@
 //
 //    /**
 //     * This @MessageMapping is intended to be used "subscribe --> stream" style.
-//     * When a new request command is received, a new stream of events is started and returned to the client.
+//     * When a new request command is received, a new stream of events is started and returned to the client85.
 //     *
 //     * @param request
 //     * @return
@@ -132,7 +132,7 @@
 //
 //        return settings
 //                .doOnNext(setting -> log.info("Channel frequency setting is {} second(s).", setting.getSeconds()))
-//                .doOnCancel(() -> log.warn("The client cancelled the channel."))
+//                .doOnCancel(() -> log.warn("The client85 cancelled the channel."))
 //                .switchMap(setting -> Flux.interval(setting)
 //                        .map(index -> new Message(SERVER, CHANNEL, index)));
 //    }

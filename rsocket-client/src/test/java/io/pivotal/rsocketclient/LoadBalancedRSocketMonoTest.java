@@ -19,7 +19,7 @@
 //import io.rsocket.RSocket;
 //import io.rsocket.core.RSocketConnector;
 //import io.rsocket.frame.decoder.PayloadDecoder;
-//import io.rsocket.transport.netty.client.TcpClientTransport;
+//import io.rsocket.transport.netty.client85.TcpClientTransport;
 //import org.springframework.messaging.rsocket.MetadataExtractor;
 //import org.springframework.messaging.rsocket.RSocketRequester;
 //import org.springframework.util.MimeTypeUtils;

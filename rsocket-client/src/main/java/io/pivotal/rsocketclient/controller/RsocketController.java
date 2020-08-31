@@ -1,5 +1,6 @@
 package io.pivotal.rsocketclient.controller;
 
+import io.pivotal.rsocketclient.client85.DemoClient;
 import io.pivotal.rsocketclient.config.RequestCompoent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.rsocket.RSocketRequester;
@@ -17,11 +18,12 @@ import java.time.Duration;
 @RestController
 public class RsocketController {
 
-//    @Autowired
-//    private RSocketRequester rSocketRequester;
 
     @Autowired
     private RequestCompoent requestCompoent;
+
+    @Autowired
+    private DemoClient demoClient;
 
 //    @GetMapping("/getget")
 //    public Mono<String> getRsocketResponse() throws InterruptedException {
@@ -32,10 +34,15 @@ public class RsocketController {
 //    }
 
     @GetMapping("/getEurekaService")
-    public Mono<String> getEurekaService(){
+    public Mono<String> getEurekaService() {
         RSocketRequester rSocketRequesterMono = requestCompoent.create("rsocket-server");
         return rSocketRequesterMono.route("demo").retrieveMono(String.class)
-                .retryBackoff(1,Duration.ofMillis(100));
+                .retryBackoff(1, Duration.ofMillis(100));
+    }
+
+    @GetMapping("/rsocketClient")
+    public Mono<String> rsocketClient() {
+        return demoClient.clientDemo();
     }
 
 }

@@ -15,7 +15,7 @@ eureka:
     serviceUrl:
       defaultZone: http://192.168.10.230:8761/eureka/
   instance:
-    instance-id: ${spring.cloud.client.ip-address}:${spring.rsocket.server.port}
+    instance-id: ${spring.cloud.client85.ip-address}:${spring.rsocket.server.port}
     prefer-ip-address: true
     metadata-map:
       rsocket-port: ${spring.rsocket.server.port}

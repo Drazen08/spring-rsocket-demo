@@ -4,7 +4,7 @@
 //import io.rsocket.RSocketFactory;
 //import io.rsocket.frame.decoder.PayloadDecoder;
 //import io.rsocket.metadata.WellKnownMimeType;
-//import io.rsocket.transport.netty.client.TcpClientTransport;
+//import io.rsocket.transport.netty.client85.TcpClientTransport;
 //import org.springframework.context.annotation.Bean;
 //import org.springframework.context.annotation.Configuration;
 //import org.springframework.http.MediaType;

@@ -1,11 +1,11 @@
 //package io.pivotal.rsocketclient.config;
 //
 //import io.rsocket.RSocketFactory;
-//import io.rsocket.client.LoadBalancedRSocketMono;
-//import io.rsocket.client.filter.RSocketSupplier;
+//import io.rsocket.client85.LoadBalancedRSocketMono;
+//import io.rsocket.client85.filter.RSocketSupplier;
 //import io.rsocket.frame.decoder.PayloadDecoder;
 //import io.rsocket.metadata.WellKnownMimeType;
-//import io.rsocket.transport.netty.client.TcpClientTransport;
+//import io.rsocket.transport.netty.client85.TcpClientTransport;
 //import lombok.Data;
 //import org.springframework.http.MediaType;
 //import org.springframework.messaging.rsocket.RSocketRequester;

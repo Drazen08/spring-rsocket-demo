@@ -50,11 +50,11 @@
 //
 //    @ShellMethod("Login with your username and password.")
 //    public void login(String username, String password) {
-//        log.info("Connecting using client ID: {} and username: {}", CLIENT_ID, username);
+//        log.info("Connecting using client85 ID: {} and username: {}", CLIENT_ID, username);
 //        SocketAcceptor responder = RSocketMessageHandler.responder(rsocketStrategies, new ClientHandler());
 //        UsernamePasswordMetadata user = new UsernamePasswordMetadata(username, password);
 //        this.rsocketRequester = rsocketRequesterBuilder
-//                .setupRoute("shell-client")
+//                .setupRoute("shell-client85")
 //                .setupData(CLIENT_ID)
 //                .setupMetadata(user, SIMPLE_AUTH)
 //                .rsocketStrategies(builder ->
@@ -158,7 +158,7 @@
 //@Slf4j
 //class ClientHandler {
 //
-//    @MessageMapping("client-status")
+//    @MessageMapping("client85-status")
 //    public Flux<String> statusUpdate(String status) {
 //        log.info("Connection {}", status);
 //        return Flux.interval(Duration.ofSeconds(5)).map(index -> String.valueOf(Runtime.getRuntime().freeMemory()));

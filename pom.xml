@@ -6,6 +6,7 @@
     <modules>
         <module>rsocket-client</module>
         <module>rsocket-server</module>
+        <module>rsocket-common-client</module>
     </modules>
 
     <parent>

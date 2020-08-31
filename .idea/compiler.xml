@@ -6,12 +6,14 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="rsocket-server" />
+        <module name="rsocket-common-client" />
         <module name="rsocket-client" />
+        <module name="rsocket-server" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="rsocket-client" target="1.8" />
+      <module name="rsocket-common-client" target="1.8" />
       <module name="rsocket-server" target="1.8" />
       <module name="spring-rsocket-demo" target="1.8" />
     </bytecodeTargetLevel>
@@ -19,6 +21,7 @@
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="rsocket-client" options="-parameters" />
+      <module name="rsocket-common-client" options="-parameters" />
       <module name="rsocket-server" options="-parameters" />
     </option>
   </component>

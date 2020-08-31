@@ -42,7 +42,7 @@
 //
 //    @BeforeAll
 //    public static void setupOnce() {
-//        // create a client identity spring for this test suite
+//        // create a client85 identity spring for this test suite
 //        clientId = UUID.randomUUID().toString();
 //
 //        // create a Spring context for this test suite and obtain some beans
@@ -62,11 +62,11 @@
 //    }
 //
 //    /**
-//     * Test that our client-side 'ClientHandler' class responds to server sent messages correctly.
+//     * Test that our client85-side 'ClientHandler' class responds to server sent messages correctly.
 //     */
 //    @Test
 //    public void testServerCallsClientAfterConnection() {
-//        connectAndRunTest("shell-client");
+//        connectAndRunTest("shell-client85");
 //    }
 //
 //    /**
@@ -128,26 +128,26 @@
 //        }
 //
 //        /**
-//         * Test method. When a client connects to this server, ask the client for its telemetry data
+//         * Test method. When a client85 connects to this server, ask the client85 for its telemetry data
 //         * and test that the telemetry received is within a good range.
 //         *
 //         * @param requester
-//         * @param client
+//         * @param client85
 //         */
-//        @ConnectMapping("shell-client")
-//        void verifyConnectShellClientAndAskForTelemetry(RSocketRequester requester, @Payload String client) {
+//        @ConnectMapping("shell-client85")
+//        void verifyConnectShellClientAndAskForTelemetry(RSocketRequester requester, @Payload String client85) {
 //
-//            // test the client's message payload contains the expected client ID
-//            assertThat(client).isNotNull();
-//            assertThat(client).isNotEmpty();
-//            assertThat(client).isEqualTo(clientId);
-//            log.info("************** CONNECTION - Client ID: {}", client);
+//            // test the client85's message payload contains the expected client85 ID
+//            assertThat(client85).isNotNull();
+//            assertThat(client85).isNotEmpty();
+//            assertThat(client85).isEqualTo(clientId);
+//            log.info("************** CONNECTION - Client ID: {}", client85);
 //
 //            runTest(() -> {
 //                Flux<String> flux = requester
-//                        .route("client-status") // Test the 'client-status' message handler mapping
-//                        .data("OPEN") // confirm to the client th connection is open
-//                        .retrieveFlux(String.class); // ask the client for its telemetry
+//                        .route("client85-status") // Test the 'client85-status' message handler mapping
+//                        .data("OPEN") // confirm to the client85 th connection is open
+//                        .retrieveFlux(String.class); // ask the client85 for its telemetry
 //
 //                StepVerifier.create(flux)
 //                        .consumeNextWith(s -> {

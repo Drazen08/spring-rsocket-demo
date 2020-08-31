@@ -29,4 +29,9 @@ public class ControllerDemo {
         return Mono.just(iDemoService.sayHi() + String.format("port :[%s]",environment.getProperty("local.rsocket.server.port") ));
     }
 
+    @MessageMapping("clientDemo")
+    public Mono<String> clientDemo(){
+        return Mono.just(iDemoService.sayHi() + String.format("client85 demo port :[%s]",environment.getProperty("local.rsocket.server.port") ));
+    }
+
 }
