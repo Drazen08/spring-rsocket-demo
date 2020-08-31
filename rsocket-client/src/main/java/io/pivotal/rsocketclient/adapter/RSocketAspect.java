@@ -28,6 +28,7 @@ public class RSocketAspect {
     @Autowired
     private RequestCompoent requestCompoent;
 
+//    @Pointcut("@annotation(io.pivotal.rsocketclient.adapter.RSocketMethod)")
     @Pointcut("execution( * io.pivotal.rsocketclient.client85.*.*(..))")
     public void cut() {
     }

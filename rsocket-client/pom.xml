@@ -18,6 +18,7 @@
 
     <properties>
         <java.version>1.8</java.version>
+        <auto-service.version>1.0-rc7</auto-service.version>
     </properties>
 
     <dependencies>
@@ -72,6 +73,12 @@
             <version>1.0.2</version>
         </dependency>
 
+        <dependency>
+            <groupId>com.google.auto.service</groupId>
+            <artifactId>auto-service-annotations</artifactId>
+            <version>${auto-service.version}</version>
+            <optional>true</optional>
+        </dependency>
 
 
         <!--        <dependency>-->
@@ -152,6 +159,21 @@
                     <includes>**/*ITest.java</includes>
                 </configuration>
             </plugin>
+
+            <plugin>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <annotationProcessorPaths>
+                        <path>
+                            <groupId>com.google.auto.service</groupId>
+                            <artifactId>auto-service</artifactId>
+                            <version>${auto-service.version}</version>
+                        </path>
+                    </annotationProcessorPaths>
+                </configuration>
+            </plugin>
+
+
         </plugins>
     </build>
 </project>
