@@ -3,7 +3,7 @@ spring:
     lazy-initialization: false
   rsocket:
     server:
-      port: 7001
+      port: 7000
       transport: tcp
 
 #     ws 使用

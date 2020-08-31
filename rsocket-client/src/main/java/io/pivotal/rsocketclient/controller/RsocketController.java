@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import reactor.core.publisher.Mono;
 
+import java.time.Duration;
+
 /**
  * @author ：sunjx
  * @date ：Created in 2020/8/26 11:42
@@ -31,11 +33,9 @@ public class RsocketController {
 
     @GetMapping("/getEurekaService")
     public Mono<String> getEurekaService(){
-        Mono<RSocketRequester> rSocketRequesterMono = requestCompoent.create("rsocket-server");
-        return rSocketRequesterMono.block().route("demo").retrieveMono(String.class);
-//        return rSocketRequesterMono.flatMap(rSocketRequester->rSocketRequester.route("demo")
-//                .data(new MarketDataRequest(stock))
-//                .retrieveMono(String.class));
+        RSocketRequester rSocketRequesterMono = requestCompoent.create("rsocket-server");
+        return rSocketRequesterMono.route("demo").retrieveMono(String.class)
+                .retryBackoff(1,Duration.ofMillis(100));
     }
 
 }
