@@ -5,6 +5,7 @@ spring:
     server:
       port: 7001
       transport: tcp
+
 #     ws 使用
 #      mapping-path: /rsocket
 

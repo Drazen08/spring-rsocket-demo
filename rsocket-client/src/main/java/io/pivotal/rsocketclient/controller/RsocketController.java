@@ -15,27 +15,27 @@ import reactor.core.publisher.Mono;
 @RestController
 public class RsocketController {
 
-    @Autowired
-    private RSocketRequester rSocketRequester;
+//    @Autowired
+//    private RSocketRequester rSocketRequester;
 
     @Autowired
     private RequestCompoent requestCompoent;
 
-    @GetMapping("/getget")
-    public Mono<String> getRsocketResponse() throws InterruptedException {
-        return rSocketRequester
-                .route("demo")
-//                .data(new MarketDataRequest(stock))
-                .retrieveMono(String.class);
-    }
+//    @GetMapping("/getget")
+//    public Mono<String> getRsocketResponse() throws InterruptedException {
+//        return rSocketRequester
+//                .route("demo")
+////                .data(new MarketDataRequest(stock))
+//                .retrieveMono(String.class);
+//    }
 
     @GetMapping("/getEurekaService")
     public Mono<String> getEurekaService(){
         Mono<RSocketRequester> rSocketRequesterMono = requestCompoent.create("rsocket-server");
-
-        return rSocketRequesterMono.flatMap(rSocketRequester->rSocketRequester.route("demo")
+        return rSocketRequesterMono.block().route("demo").retrieveMono(String.class);
+//        return rSocketRequesterMono.flatMap(rSocketRequester->rSocketRequester.route("demo")
 //                .data(new MarketDataRequest(stock))
-                .retrieveMono(String.class));
+//                .retrieveMono(String.class));
     }
 
 }

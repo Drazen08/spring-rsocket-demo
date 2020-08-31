@@ -1,6 +1,7 @@
 package io.pivotal.rsocketserver;
 
 import io.pivotal.rsocketserver.service.IDemoService;
+import io.rsocket.RSocket;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.messaging.handler.annotation.MessageMapping;
