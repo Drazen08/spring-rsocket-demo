@@ -1,5 +1,7 @@
 package io.pivotal.rsocketclient.controller;
 
+import com.ido85.client.Message;
+import io.netty.util.internal.MathUtil;
 import io.pivotal.rsocketclient.client85.DemoClient;
 import io.pivotal.rsocketclient.config.RequestCompoent;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 import reactor.core.publisher.Mono;
 
 import java.time.Duration;
+import java.util.Random;
 
 /**
  * @author ：sunjx
@@ -43,6 +46,17 @@ public class RsocketController {
     @GetMapping("/rsocketClient")
     public Mono<String> rsocketClient() {
         return Mono.just(demoClient.clientDemo());
+    }
+
+
+    @GetMapping("/rsocketClientWithData")
+    public Mono<Message> rsocketClientW() {
+        Message message = new Message();
+        message.setOrigin("or");
+        message.setIndex(((Double) Math.random()).longValue());
+        message.setCreated(System.currentTimeMillis());
+        message.setInteraction("interaction");
+        return Mono.just(demoClient.msgChecker(message));
     }
 
 }

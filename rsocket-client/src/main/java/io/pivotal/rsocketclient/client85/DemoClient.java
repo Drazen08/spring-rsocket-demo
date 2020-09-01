@@ -1,8 +1,8 @@
 package io.pivotal.rsocketclient.client85;
 
+import com.ido85.client.Message;
 import io.pivotal.rsocketclient.adapter.RSocketMethod;
 import io.pivotal.rsocketclient.adapter.RSocketServer;
-import io.pivotal.rsocketclient.data.Message;
 
 
 /**

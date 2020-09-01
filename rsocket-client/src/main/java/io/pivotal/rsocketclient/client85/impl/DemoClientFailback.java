@@ -1,10 +1,9 @@
 package io.pivotal.rsocketclient.client85.impl;
 
 import com.google.auto.service.AutoService;
+import com.ido85.client.Message;
 import io.pivotal.rsocketclient.client85.DemoClient;
-import io.pivotal.rsocketclient.data.Message;
 import org.springframework.stereotype.Service;
-import reactor.core.publisher.Mono;
 
 /**
  * @author ：sunjx
@@ -14,6 +13,7 @@ import reactor.core.publisher.Mono;
 @Service
 @AutoService(DemoClient.class)
 public class DemoClientFailback implements DemoClient {
+
     @Override
     public String clientDemo() {
         return "fail";
