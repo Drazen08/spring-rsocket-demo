@@ -2,8 +2,8 @@ package io.pivotal.rsocketclient.client85;
 
 import io.pivotal.rsocketclient.adapter.RSocketMethod;
 import io.pivotal.rsocketclient.adapter.RSocketServer;
-import org.springframework.messaging.handler.annotation.MessageMapping;
-import reactor.core.publisher.Mono;
+import io.pivotal.rsocketclient.data.Message;
+
 
 /**
  * @author ：sunjx
@@ -14,6 +14,10 @@ import reactor.core.publisher.Mono;
 public interface DemoClient {
 
     @RSocketMethod("clientDemo")
-    public Mono<String> clientDemo();
+    public String clientDemo();
+
+
+    @RSocketMethod("messageCheck")
+    public Message msgChecker(Message message);
 
 }

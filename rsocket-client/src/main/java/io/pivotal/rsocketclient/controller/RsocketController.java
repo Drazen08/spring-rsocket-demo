@@ -42,7 +42,7 @@ public class RsocketController {
 
     @GetMapping("/rsocketClient")
     public Mono<String> rsocketClient() {
-        return demoClient.clientDemo();
+        return Mono.just(demoClient.clientDemo());
     }
 
 }

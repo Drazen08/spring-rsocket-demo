@@ -1,6 +1,6 @@
 //package io.pivotal.rsocketserver;
 //
-//import io.pivotal.rsocketserver.data.Message;
+//import com.ido85.client.Message;
 //import io.rsocket.metadata.WellKnownMimeType;
 //import org.junit.jupiter.api.AfterAll;
 //import org.junit.jupiter.api.BeforeAll;

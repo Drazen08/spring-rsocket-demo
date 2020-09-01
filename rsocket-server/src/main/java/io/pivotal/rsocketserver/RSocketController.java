@@ -1,6 +1,6 @@
 //package io.pivotal.rsocketserver;
 //
-//import io.pivotal.rsocketserver.data.Message;
+//import com.ido85.client.Message;
 //import lombok.extern.slf4j.Slf4j;
 //import org.springframework.messaging.handler.annotation.MessageMapping;
 //import org.springframework.messaging.handler.annotation.Payload;

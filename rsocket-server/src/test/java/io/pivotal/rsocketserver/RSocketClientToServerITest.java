@@ -1,6 +1,6 @@
 //package io.pivotal.rsocketserver;
 //
-//import io.pivotal.rsocketserver.data.Message;
+//import com.ido85.client.Message;
 //import io.rsocket.SocketAcceptor;
 //import io.rsocket.metadata.WellKnownMimeType;
 //import lombok.extern.slf4j.Slf4j;

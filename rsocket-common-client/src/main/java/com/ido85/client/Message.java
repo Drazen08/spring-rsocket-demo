@@ -1,4 +1,4 @@
-package io.pivotal.rsocketserver.data;
+package com.ido85.client;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -14,6 +14,8 @@ public class Message {
     private String interaction;
     private long index;
     private long created = Instant.now().getEpochSecond();
+
+    private String checked;
 
     public Message(String origin, String interaction) {
         this.origin = origin;

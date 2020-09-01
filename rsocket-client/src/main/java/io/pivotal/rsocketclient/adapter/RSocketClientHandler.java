@@ -1,32 +1,61 @@
 package io.pivotal.rsocketclient.adapter;
 
-import org.springframework.stereotype.Component;
+import io.pivotal.rsocketclient.util.ClassFinderUtil;
+import org.springframework.beans.factory.support.BeanDefinitionRegistry;
+import org.springframework.context.annotation.ImportBeanDefinitionRegistrar;
+import org.springframework.context.annotation.ImportSelector;
+import org.springframework.core.annotation.AnnotationAttributes;
+import org.springframework.core.type.AnnotationMetadata;
 
 import java.util.Map;
 import java.util.ServiceLoader;
+import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
-import io.pivotal.rsocketclient.client85.DemoClient;
+
+
 /**
  * @author ：sunjx
  * @date ：Created in 2020/8/31 17:54
  * @description：
  */
-@Component
-public class RSocketClientHandler {
+public class RSocketClientHandler implements ImportSelector {
 
-    private final Map<String,Class<?>> clientHash = new ConcurrentHashMap<>(1024);
+    /**
+     * k class impl
+     * v interface
+     */
+    private final static Map<Class<?>, Class<?>> clientHash = new ConcurrentHashMap<>(1024);
 
-    public static void main(String[] args) {
-        ServiceLoader loader = ServiceLoader.load(DemoClient.class);
-        ServiceLoader m = ServiceLoader.load(RSocketServer.class);
-
-        for (Object s : loader) {
-            System.out.println(s.getClass());
-        }
-
-        System.out.println(m.toString());
-
+    public static Class<?> findIRsocketClient(Class<?> implClassName){
+        return clientHash.getOrDefault(implClassName,null);
     }
 
 
+    @Override
+    public String[] selectImports(AnnotationMetadata annotationMetadata) {
+
+        //读取DemoScan的属性
+        AnnotationAttributes annoAttrs = AnnotationAttributes.fromMap(
+                annotationMetadata.getAnnotationAttributes(EnableRsocketClient.class.getName()));
+        if (annoAttrs != null) {
+            String[] packages = annoAttrs.getStringArray("packages");
+            if (packages != null && packages.length > 0) {
+                for (String aPackage : packages) {
+                    Set<Class<?>> classesWithAnno = ClassFinderUtil.getClassesWithAnno(aPackage, RSocketServer.class);
+                    if (classesWithAnno != null && classesWithAnno.size() > 0) {
+                        for (Class<?> aClass : classesWithAnno) {
+                            // 拿到的是实现类
+                            ServiceLoader m = ServiceLoader.load(aClass);
+                            for (Object o : m) {
+                                final String name = o.getClass().getName();
+                                clientHash.put(o.getClass(),aClass);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        return new String[0];
+    }
 }
