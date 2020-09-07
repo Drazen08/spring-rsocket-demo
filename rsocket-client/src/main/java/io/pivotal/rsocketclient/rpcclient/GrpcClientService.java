@@ -20,9 +20,14 @@ public class GrpcClientService {
 
 
     public String sendMessage(String name) {
-        SimpleGrpc.SimpleBlockingStub stub = SimpleGrpc.newBlockingStub(serverChannel);
-        HelloReply response = stub.sayHello(HelloRequest.newBuilder().setName(name).build());
-        return response.getMessage();
+        try {
+            SimpleGrpc.SimpleBlockingStub stub = SimpleGrpc.newBlockingStub(serverChannel);
+            HelloReply response = stub.sayHello(HelloRequest.newBuilder().setName(name).build());
+            return response.getMessage();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return e.getMessage();
+        }
     }
 
 }
