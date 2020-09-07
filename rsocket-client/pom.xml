@@ -19,6 +19,10 @@
     <properties>
         <java.version>1.8</java.version>
         <auto-service.version>1.0-rc7</auto-service.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <java.version>1.8</java.version>
+        <brave.instrumentation.grpc>5.12.5</brave.instrumentation.grpc>
     </properties>
 
     <dependencies>
@@ -37,40 +41,6 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-rsocket</artifactId>
-        </dependency>
-<!--        <dependency>-->
-<!--            <groupId>org.springframework.boot</groupId>-->
-<!--            <artifactId>spring-boot-starter-security</artifactId>-->
-<!--        </dependency>-->
-<!--        <dependency>-->
-<!--            <groupId>org.springframework.security</groupId>-->
-<!--            <artifactId>spring-security-messaging</artifactId>-->
-<!--        </dependency>-->
-<!--        <dependency>-->
-<!--            <groupId>org.springframework.security</groupId>-->
-<!--            <artifactId>spring-security-rsocket</artifactId>-->
-<!--        </dependency>-->
-<!--        <dependency>-->
-<!--            <groupId>org.springframework.shell</groupId>-->
-<!--            <artifactId>spring-shell-starter</artifactId>-->
-<!--            <version>2.0.0.RELEASE</version>-->
-<!--        </dependency>-->
-        <dependency>
-            <groupId>io.rsocket</groupId>
-            <artifactId>rsocket-load-balancer</artifactId>
-            <version>1.0.2</version>
-        </dependency>
-
-        <!-- https://mvnrepository.com/artifact/io.rsocket/rsocket-core -->
-        <dependency>
-            <groupId>io.rsocket</groupId>
-            <artifactId>rsocket-core</artifactId>
-            <version>1.0.2</version>
         </dependency>
 
         <dependency>
@@ -114,10 +84,29 @@
             <scope>compile</scope>
         </dependency>
 
+        <!-- grpc -->
+
         <dependency>
             <groupId>com.85ido</groupId>
-            <artifactId>rsocket-common-client</artifactId>
+            <artifactId>grpc-lib</artifactId>
             <version>1.0-SNAPSHOT</version>
+        </dependency>
+
+        <dependency>
+            <groupId>net.devh</groupId>
+            <artifactId>grpc-client-spring-boot-starter</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>io.zipkin.brave</groupId>
+            <artifactId>brave-instrumentation-grpc</artifactId>
+            <version>${brave.instrumentation.grpc}</version>
+        </dependency>
+
+
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-zipkin</artifactId>
         </dependency>
 
     </dependencies>

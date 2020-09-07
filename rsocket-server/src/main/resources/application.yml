@@ -1,23 +1,21 @@
 spring:
-  main:
-    lazy-initialization: false
-  rsocket:
-    server:
-      port: 7000
-      transport: tcp
+  sleuth:
+    sampler:
+      probability: 1
 
-#     ws 使用
-#      mapping-path: /rsocket
-
-
+server:
+  port: 8001
+grpc:
+  server:
+    port: 0
+    security:
+      enabled: false
 eureka:
   client:
+    register-with-eureka: true
+    fetch-registry: true
     serviceUrl:
       defaultZone: http://192.168.10.230:8761/eureka/
   instance:
-    instance-id: ${spring.cloud.client85.ip-address}:${spring.rsocket.server.port}
     prefer-ip-address: true
-    metadata-map:
-      rsocket-port: ${spring.rsocket.server.port}
-#      management.port: ${spring.rsocket.server.port}
 

@@ -8,10 +8,12 @@ import org.springframework.boot.autoconfigure.security.reactive.ReactiveSecurity
 import org.springframework.boot.autoconfigure.security.reactive.ReactiveUserDetailsServiceAutoConfiguration;
 import org.springframework.boot.autoconfigure.security.rsocket.RSocketSecurityAutoConfiguration;
 import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
+import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
+import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 
-@EnableRsocketClient(packages = {"io.pivotal.rsocketclient.client85"})
 @SpringBootApplication
-//@SpringBootApplication(exclude = {ReactiveUserDetailsServiceAutoConfiguration.class, SecurityAutoConfiguration.class, ReactiveSecurityAutoConfiguration.class, RSocketSecurityAutoConfiguration.class})
+@EnableDiscoveryClient
+@EnableEurekaClient
 public class RsocketShellClientApplication {
 
     public static void main(String[] args) throws Exception {
