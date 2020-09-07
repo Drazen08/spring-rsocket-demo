@@ -15,8 +15,8 @@ public class Grpservice extends SimpleGrpc.SimpleImplBase {
 
     @Override
     public void sayHello(HelloRequest request, io.grpc.stub.StreamObserver<HelloReply> responseObserver) {
-        responseObserver.onCompleted();
         HelloReply reply = HelloReply.newBuilder().setMessage("Hello =============> " + request.getName()).build();
         responseObserver.onNext(reply);
+        responseObserver.onCompleted();
     }
 }
