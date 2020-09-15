@@ -1,4 +1,4 @@
-package io.pivotal.rsocketclient.adapter;
+package io.application.grpc.adapter.annotation;
 
 import org.springframework.context.annotation.Import;
 
@@ -9,13 +9,14 @@ import java.lang.annotation.Target;
 
 /**
  * @author ：sunjx
- * @date ：Created in 2020/8/31 16:44
+ * @date ：Created in 2020/9/1 10:06
  * @description：
  */
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
-public @interface RSocketServer {
+@Import(RSocketClientHandler.class)
+public @interface EnableGrpc {
 
-    String serviceId();
+    String [] packages() default {};
 
 }

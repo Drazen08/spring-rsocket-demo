@@ -1,8 +1,6 @@
-package io.pivotal.rsocketclient.adapter;
+package io.application.grpc.adapter.annotation;
 
-import io.pivotal.rsocketclient.util.ClassFinderUtil;
-import org.springframework.beans.factory.support.BeanDefinitionRegistry;
-import org.springframework.context.annotation.ImportBeanDefinitionRegistrar;
+import io.application.grpc.util.ClassFinderUtil;
 import org.springframework.context.annotation.ImportSelector;
 import org.springframework.core.annotation.AnnotationAttributes;
 import org.springframework.core.type.AnnotationMetadata;
@@ -36,12 +34,12 @@ public class RSocketClientHandler implements ImportSelector {
 
         //读取DemoScan的属性
         AnnotationAttributes annoAttrs = AnnotationAttributes.fromMap(
-                annotationMetadata.getAnnotationAttributes(EnableRsocketClient.class.getName()));
+                annotationMetadata.getAnnotationAttributes(EnableGrpc.class.getName()));
         if (annoAttrs != null) {
             String[] packages = annoAttrs.getStringArray("packages");
             if (packages != null && packages.length > 0) {
                 for (String aPackage : packages) {
-                    Set<Class<?>> classesWithAnno = ClassFinderUtil.getClassesWithAnno(aPackage, RSocketServer.class);
+                    Set<Class<?>> classesWithAnno = ClassFinderUtil.getClassesWithAnno(aPackage, GrpcServer.class);
                     if (classesWithAnno != null && classesWithAnno.size() > 0) {
                         for (Class<?> aClass : classesWithAnno) {
                             // 拿到的是实现类

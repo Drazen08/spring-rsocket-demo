@@ -18,9 +18,9 @@ public class GrpcClientService {
     @GrpcClient("rsocket-server")
     private Channel serverChannel;
 
-
     public String sendMessage(String name) {
         try {
+
             SimpleGrpc.SimpleBlockingStub stub = SimpleGrpc.newBlockingStub(serverChannel);
             HelloReply response = stub.sayHello(HelloRequest.newBuilder().setName(name).build());
             return response.getMessage();

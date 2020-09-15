@@ -1,14 +1,17 @@
-package io.pivotal.rsocketclient.util;
+package io.application.grpc.util;
 
-import io.pivotal.rsocketclient.adapter.RSocketServer;
+import io.application.grpc.adapter.annotation.GrpcServer;
 
 import java.io.File;
 import java.io.FileFilter;
 import java.io.IOException;
+import java.lang.annotation.Annotation;
 import java.net.JarURLConnection;
 import java.net.URL;
 import java.net.URLDecoder;
-import java.util.*;
+import java.util.Enumeration;
+import java.util.LinkedHashSet;
+import java.util.Set;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 import java.util.stream.Collectors;
@@ -19,6 +22,7 @@ import java.util.stream.Collectors;
  * @description：
  */
 public class ClassFinderUtil {
+
    private ClassFinderUtil(){}
 
     /**
@@ -26,11 +30,11 @@ public class ClassFinderUtil {
      * @param pack package path
      * @param anno annotation
      */
-    public static Set<Class<?>> getClassesWithAnno(String pack, Class<?> anno) {
+    public static Set<Class<?>> getClassesWithAnno(String pack, Class<? extends Annotation> anno) {
         Set<Class<?>> classes = getClasses(pack);
 
         return classes.stream().filter(s -> {
-            RSocketServer annotation = s.getAnnotation(RSocketServer.class);
+            GrpcServer annotation = s.getAnnotation(GrpcServer.class);
             return annotation != null;
         }).collect(Collectors.toSet());
     }

@@ -1,4 +1,4 @@
-//package io.pivotal.rsocketclient.adapter;
+//package io.application.grpc.adapter;
 //
 //import io.netty.util.internal.StringUtil;
 //import io.pivotal.rsocketclient.config.RequestCompoent;
@@ -31,7 +31,7 @@
 //    @Autowired
 //    private RequestCompoent requestCompoent;
 //
-////        @Pointcut("@annotation(io.pivotal.rsocketclient.adapter.RSocketMethod)")
+////        @Pointcut("@annotation(io.application.grpc.adapter.annotation.RSocketMethod)")
 //    @Pointcut("execution( * io.pivotal.rsocketclient.client85.*.*(..))")
 //    public void cut() {
 //    }
